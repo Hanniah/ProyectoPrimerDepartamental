@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cien Ecatepences</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- // Hice uso de bootstrap para darle un mejor estilo a mi pagina, en este caso usé un carrusel 
+//para que las preguntas giraran una vez el usuario haya seleccionado una repuesta.
+
+
+//para el js también mande a llamar el bootstrap del js -->
+<link href="CSS/bootstrap.min.css" rel="stylesheet">
+
+<link href="CSS/style.css" rel="stylesheet">
+<script src="Scripts/js/bootstrap.bundle.min.js"></script>
+ 
+
+<style>
+.btn-success{
+    --bs-btn-bg:#4871A0 !important;
+    --bs-btn-border-color: #4871A0 !important;
+}
+
+.btn:hover
+{
+    background-color:#618dc1 !important;
+    border-color:#618dc1 !important;
+}
+
+.card:hover{
+    background-color:#b0a3d4 !important;
+    cursor: pointer;
+}
+
+.card{
+    background-color:#7D80DA !important;
+}
+
+.divFondo{
+    background-image: url(Img/slide-3.jpg) ;
+}
+
+</style>
+
+</head>
+<body > 
+    <!-- /Para el diseño quería que se viera una barra donde se pudiera ver las secciones de las preguntas (materias) -->
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">SECCIÓN</a>
+          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="cienEcatepences.html?categoria=General">Cultura General</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="cienEcatepences.html?categoria=Historia">Historia</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="cienEcatepences.html?categoria=Fisica">Fisica Y Química</a>
+              </li>
+            </ul> 
+          </div>
+        </div>
+      </nav>
+      <div id="fondo" class="divFondo">
+        <div class="divPreguntas">
+         
+            <h2 id="encabezadoPregunta">Pregunta #</h2>
+            <br>
+            <br>
+            <label id="pregunta" class="lblPregunta"></label>
+            <br>
+            <br>
+            <div class="container" >
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card" style="width: 18rem;"> 
+                            <div class="card-body">
+                              <a class="respuesta" href="#" id="respuestaA" onclick="validaRespuesta(this)" data-respuesta="A"  ></a> 
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card" style="width: 18rem;"> 
+                            <div class="card-body">
+                                <a class="respuesta" href="#" id="respuestaB"  onclick="validaRespuesta(this)"  data-respuesta="B"></a> 
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card" style="width: 18rem;"> 
+                            <div class="card-body">
+                                <a class="respuesta" href="#" id="respuestaC" onclick="validaRespuesta(this)" data-respuesta="C"></a> 
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card" style="width: 18rem;"> 
+                            <div class="card-body">
+                                <a class="respuesta" href="#" id="respuestaD" onclick="validaRespuesta(this)" data-respuesta="D"></a> 
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card" style="width: 18rem;"> 
+                            <div class="card-body">
+                                <a class="respuesta" href="#" id="respuestaE" onclick="validaRespuesta(this)" data-respuesta="E"></a> 
+                            </div>
+                          </div>
+                    </div>
+                </div> 
+
+            </div> 
+        </div>
+        <br>
+        <!-- //En este div tengo mis imagenes que quiero mostrar al usuario al inicion de la pagina, para la respuesta correcta e incorrecta. -->
+        <div class="divRespuesta">
+            <h2 id="encabezadoRespuesta"> <img src="../ProyectoHan/Img/eso-esta-perfecto-jake.gif"></h2> 
+      
+            <h2 id="encabezadoRespuestaMal"><img src="../ProyectoHan/Img/losiento.gif"></h2>
+            <button type="button" class="btn btn-primary">Siguiente</button> 
+        </div>    
+        <br>
+        </div>
+        
+
+ <!-- // En esta parte nombre mis objetos para el id de cada pregunta, esto me permitira ver la pregunta con su respectiva respuesta -->
+<script>
+          
+    function mostrarPregunta(idPregunta)
+    {
+       document.getElementById("encabezadoPregunta").innerHTML = "Pregunta # " + obj[idPregunta].FIPREGUNTA;
+       document.getElementById("pregunta").innerHTML = obj[idPregunta].FCPREGUNTA;
+       document.getElementById("respuestaA").innerHTML = obj[idPregunta].FCA;
+       document.getElementById("respuestaB").innerHTML = obj[idPregunta].FCB;
+       document.getElementById("respuestaC").innerHTML = obj[idPregunta].FCC;
+       document.getElementById("respuestaD").innerHTML = obj[idPregunta].FCD;
+       document.getElementById("respuestaE").innerHTML = obj[idPregunta].FCE;
+    }
+   </script>
+
+        <!-- //Hice uso de un formato json para poder agregar mi lista con todas las preguntas y sea más practico la insercion de los datos -->
+        <script>
+
+           const categorias = new URLSearchParams(window.location.search);
+           var categoriaSeleccionada = categorias.get('categoria');
+            //alert(categoriaSeleccionada);    
+
+
+            const preguntasCulturaGeneral = '[{"FIPREGUNTA":1,"FCPREGUNTA":"¿En dónde se originaron los juegos olímpicos? ","FCA":"Grecia- Atenas ","FCB":"Italia- Roma ","FCC":"Grecia-Esparta ","FCD":"Grecia-Roma ","FCE":"Grecia-Olimpia  ","FCRESPUESTA":"E"},{"FIPREGUNTA":2,"FCPREGUNTA":"¿Cuál de los siguientes monumentos es característico de la cultura egipcia? ","FCA":"La Estatua de la Libertad. ","FCB":"Las Pirámides de Giza. ","FCC":"El Coliseo Romano. ","FCD":"El Faro de Alejandría ","FCE":"La Muralla Egipcia ","FCRESPUESTA":"B"},{"FIPREGUNTA":3,"FCPREGUNTA":"¿En qué país de Europa se encuentra la Torre de Pisa? ","FCA":"Italia. ","FCB":"Alemania. ","FCC":"Rusia. ","FCD":"Croacia. ","FCE":"Francia","FCRESPUESTA":"A"},{"FIPREGUNTA":4,"FCPREGUNTA":"La capital de Suiza es: ","FCA":"Estocolmo. ","FCB":"Berlín. ","FCC":"Berna. ","FCD":"Dushanb ","FCE":"Ciudad Vieja Zuisa ","FCRESPUESTA":"C"},{"FIPREGUNTA":5,"FCPREGUNTA":"¿Quién pintó “La Última Cena”? ","FCA":"Bernardo Bitti ","FCB":"Leonardo Dicaprio ","FCC":"Leonardo da Vinci ","FCD":"Angelino Medoro ","FCE":"Anhy Medoro ","FCRESPUESTA":"C"},{"FIPREGUNTA":6,"FCPREGUNTA":"El autor de la novela “Cinco Esquinas” es el escritor… ","FCA":"Mario Vargas Llosa. ","FCB":"Abraham Valdelomar. ","FCC":"José Eduardo Eielson. ","FCD":"Julio Ramón Ribeyro. ","FCE":"Bryce Echenique ","FCRESPUESTA":"A"},{"FIPREGUNTA":7,"FCPREGUNTA":"¿Cuál de las siguientes culturas no es originaria de América? ","FCA":"La cultura azteca. ","FCB":"La cultura egipcia. ","FCC":"La cultura inca. ","FCD":"La cultura maya. ","FCE":"La cultura Chimú.","FCRESPUESTA":"B"},{"FIPREGUNTA":8,"FCPREGUNTA":"¿Dónde se encuentran las cataratas del Niagara? ","FCA":"Sudáfrica. ","FCB":"México y Canadá ","FCC":"Argentina, Brasil y Paraguay. ","FCD":"Groenlandia y Canadá. ","FCE":"EE. UU y Canadá ","FCRESPUESTA":"E"},{"FIPREGUNTA":9,"FCPREGUNTA":"¿Entre qué países fue la guerra de los 6 días? ","FCA":"Israel, Estados Unidos, Turquía y Rusia. ","FCB":"Bolivia, Argentina y Paraguay ","FCC":"Israel, Egipto, Jordania, Irak y Siria ","FCD":"Perú, España y Chile. ","FCE":"Francia, Estados Unidos, Turquía y Rusia.  ","FCRESPUESTA":"C"},{"FIPREGUNTA":10,"FCPREGUNTA":"¿Quién fue el primer hombre en revelarse del yugo español durante el Virreinato, pidiendo la libertad de Hispanoamérica y la eliminación de toda forma de explotación indígena? ","FCA":"José Tupac I","FCB":"Mariano Melgar. ","FCC":"José Olaya ","FCD":"Mateo Pumacahua ","FCE":"José Gabriel Condorcanqui ","FCRESPUESTA":"E"},{"FIPREGUNTA":11,"FCPREGUNTA":"¿Cuáles fueron las mayores figuras políticas durante la segunda guerra mundial? ","FCA":"Margaret Thatcher, Adolf Hitler, Vladimir Putin, Mussolini, El Principe Rainiero ","FCB":"Roseu, Churchill, Lenin, Hitler, Mussolini, Hirohito. ","FCC":"Franco, Mussolini, Churchill, Zar Nicolas II, Adolf Hitler. ","FCD":"Franco, Mao Ze tung, Churchill, Zar Nicolas I,  Peter Huld ","FCE":"Roosevelt, Churchill, Stalin, Hitler, Mussolini, Hirohito. ","FCRESPUESTA":"E"},{"FIPREGUNTA":12,"FCPREGUNTA":"Personaje peruano que fue el Secretario General de la ONU ","FCA":"Javier Pérez de Cuellar ","FCB":"Francisco Tudela. ","FCC":"Allan Wagner. ","FCD":"Rafael Rey de Castro. ","FCE":"Lidia Michelet ","FCRESPUESTA":"A"},{"FIPREGUNTA":13,"FCPREGUNTA":"¿En qué país se sitúa el origen de la Revolución Industrial del siglo XVIII? ","FCA":"Francia. ","FCB":"Inglaterra. ","FCC":"Alemania. ","FCD":"Italia. ","FCE":"Estados Unidos","FCRESPUESTA":"B"},{"FIPREGUNTA":14,"FCPREGUNTA":"Dante Alighieri escribió: ","FCA":"La casa verde ","FCB":"La divina comedia ","FCC":"El tambor de hojalata ","FCD":"El lobo estepario ","FCE":"El Regreso de Moz ","FCRESPUESTA":"B"},{"FIPREGUNTA":15,"FCPREGUNTA":"¿Qué nombre recibe el espacio en el cual gravitan los astros organizados en sistemas armónicos? ","FCA":"Galaxias ","FCB":"Cúmulos ","FCC":"Sistema Solar ","FCD":"El Más Alla ","FCE":"Universo","FCRESPUESTA":"E"},{"FIPREGUNTA":16,"FCPREGUNTA":"¿Qué rey francés es llamado “el Rey Sol”? ","FCA":"Luis XIII de Francia. ","FCB":"Luis XIV de Francia. ","FCC":"Luis XV de Francia. ","FCD":"Luis XVI de Francia. ","FCE":"Putin XV de Francia.  ","FCRESPUESTA":"B"},{"FIPREGUNTA":17,"FCPREGUNTA":"El fundador de Cusco y Primer Rey de los Incas, fue? ","FCA":"Sinchi Cápac. ","FCB":"Huayna Cápac. ","FCC":"Pachacútec. ","FCD":"Manco Inca. ","FCE":"Manco Cápac","FCRESPUESTA":"E"},{"FIPREGUNTA":18,"FCPREGUNTA":"Cuál de las siguientes obras fue escrita por el escritor Mario Vargas Llosa (Premio Nobel de Literatura 2011)? ","FCA":"Pantaleón y las visitadoras. ","FCB":"El mundo es ancho y ajeno. ","FCC":"El sexto. ","FCD":"Matalaché. ","FCE":"Rímac el Tierno ","FCRESPUESTA":"A"},{"FIPREGUNTA":19,"FCPREGUNTA":"El autor de la obra: “Tradiciones Peruanas”, fue escrito por… ? ","FCA":"José María Arguedas. ","FCB":"José Santos Chocano. ","FCC":"Mario Palma. ","FCD":"Enrique López Albújar. ","FCE":"Ricardo Palma.","FCRESPUESTA":"E"},{"FIPREGUNTA":20,"FCPREGUNTA":"¿Cuáles son los tres estilos arquitectónicos se dieron en la antigua Grecia? ","FCA":"Barroco, romano y mudéjar. ","FCB":"Románico, gótico y renacentista. ","FCC":"Barroco, gótico y románico. ","FCD":"Jórico, Fónico y Dorintio. ","FCE":"Dórico, jónico y corintio.","FCRESPUESTA":"E"}]'
+            const preguntasHistoria ='[{"FIPREGUNTA":1,"FCPREGUNTA":"Los samuráis eran:","FCA":"Antiguos guerreros persas.","FCB":"Los aliados de los espartanos.","FCC":"Antiguos guerreros japoneses.","FCD":"","FCE":"","FCRESPUESTA":"C.","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":2,"FCPREGUNTA":"¿Por cuál otro nombre se conoce el Imperio Romano de Oriente?","FCA":"Imperio Mongol.","FCB":"Imperio Otomano.","FCC":"Imperio Bizantino.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":3,"FCPREGUNTA":"Estos acontecimientos marcaron el final de la Edad Media y el comienzo de la Edad Moderna:","FCA":"La invención de la imprenta y la llegada de los europeos a América en el siglo XV.","FCB":"Las invasiones bárbaras y la caída de Roma en el 476 d.C.","FCC":"La Primera Guerra Mundial y la revolución bolchevique a comienzos del siglo XX.","FCD":"","FCE":"","FCRESPUESTA":"A","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":4,"FCPREGUNTA":"¿Dónde y cuándo pintó Miguel Ángel la bóveda de la Capilla Sixtina?","FCA":"En París en el siglo XVIII.","FCB":"En Madrid en el siglo XVII.","FCC":"En el Vaticano en el siglo XVI.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":5,"FCPREGUNTA":"¿Dónde se construyó la gran ciudad de Teotihuacan?","FCA":"En los andes de Suramérica.","FCB":"En el altiplano central de México.","FCC":"En las grandes planicies de Norteamérica.","FCD":"","FCE":"","FCRESPUESTA":"B","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":6,"FCPREGUNTA":"¿Cuál idioma hablaban los aztecas?","FCA":"Quechua.","FCB":"Aymara.","FCC":"Náhuatl.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":7,"FCPREGUNTA":"¿Cuándo sucedió la caída de Tenochtitlan, capital del imperio Azteca-mexica?","FCA":"El 13 de agosto de 1521.","FCB":"El 1 de mayo de 1886.","FCC":"El 12 de octubre de 1492","FCD":"","FCE":"","FCRESPUESTA":"A","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":8,"FCPREGUNTA":"¿Cuáles de estos libros fueron escritos por William Shakespeare?","FCA":"Don Quijote y las Novelas ejemplares.","FCB":"Fausto y Los sufrimientos del joven Werther.","FCC":"Romeo y Julieta, y Hamlet","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":9,"FCPREGUNTA":"El dios sol en la cultura inca se llamaba:","FCA":"Huitzilopochtli.","FCB":"Quetzalcóatl.","FCC":"Inti.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":10,"FCPREGUNTA":"¿Cuál fue el último emperador inca?","FCA":"Atahualpa.","FCB":"Moctezuma II.","FCC":"Gerónimo.","FCD":"","FCE":"","FCRESPUESTA":"A","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":11,"FCPREGUNTA":"¿En qué fecha y ciudad se firmó el acta de independencia de los Estados Unidos de América?","FCA":"En Lexington el 19 de abril de 1775.","FCB":"En Filadelfia el 4 de julio de 1776","FCC":"En Miami el 28 de julio de 1896.","FCD":"","FCE":"","FCRESPUESTA":"B","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":12,"FCPREGUNTA":"¿Cuándo comenzó la Revolución Francesa?","FCA":"En 1810.","FCB":"En 1914.","FCC":"En 1789.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":13,"FCPREGUNTA":"¿Quiénes fueron los líderes de la primera etapa de la independencia de México?","FCA":"El cura Miguel Hidalgo, Ignacio Allende y Juan Aldama.","FCB":"Simón Bolívar, Francisco de Miranda y Francisco de Paula Santander.","FCC":"José de San Martín y Bernardo OHiggins.","FCD":"","FCE":"","FCRESPUESTA":"A","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":14,"FCPREGUNTA":"¿Cuándo ocurrió la batalla de Waterloo que marcó el final de las guerras napoleónicas?","FCA":"El 24 de junio de 1821.","FCB":"El 24 de mayo de 1822.","FCC":"El 18 de junio de 1815.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":15,"FCPREGUNTA":"¿Quién es el patriota suramericano conocido como el Gran Mariscal de Ayacucho?","FCA":"Agustín de Iturbide.","FCB":"Antonio José de Sucre.","FCC":"Manuel Rodríguez.","FCD":"","FCE":"","FCRESPUESTA":"B","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":16,"FCPREGUNTA":"¿Dónde y cuándo se celebraron los Primeros Juegos Olímpicos de la modernidad?","FCA":"En Estocolmo, Suecia, en 1912.","FCB":"En París, Francia, en 1900.","FCC":"En París, Francia, en 1900.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":17,"FCPREGUNTA":"¿Cuál fue la primera persona en ganar el premio Nobel en dos oportunidades?","FCA":"Guglielmo Marconi.","FCB":"Max Planck.","FCC":"Marie Curie.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":18,"FCPREGUNTA":"La causa detonante de la Primera Guerra Mundial fue:","FCA":"El asesinato del archiduque Francisco Fernando de Austria en 1914.","FCB":" La invasión italiana de Etiopía en 1935.","FCC":" El ascenso al poder de Kemal Atatürk en Turquía en 1920.","FCD":"","FCE":"","FCRESPUESTA":"A","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":19,"FCPREGUNTA":"¿Qué consecuencias políticas trajo la Revolución Rusa de 1917?","FCA":"La llegada de la monarquía de los Romanov al poder.","FCB":"La desaparición del imperio ruso y la creación del primer Estado socialista en la historia.","FCC":"La construcción del muro de Berlín y la división de Alemania en dos Estados.","FCD":"","FCE":"","FCRESPUESTA":"B","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":20,"FCPREGUNTA":"¿Qué fue el Tratado de Versalles?","FCA":"Una declaración de guerra entre Francia y Holanda.","FCB":"Un compromiso de paz firmado por varias naciones para poner fin a la Primera Guerra Mundial.","FCC":"Un tratado de amistad y de alianza militar entre Estados Unidos, Holanda, Francia y Polonia.","FCD":"","FCE":"","FCRESPUESTA":"B","CATEGORIA":"HISTORIA"},{"FIPREGUNTA":21,"FCPREGUNTA":"¿Con qué nombre se conoce la crisis económica generada por el crac financiero de Wall Street en 1929?","FCA":"La gran depresión.","FCB":"La crisis del golfo.","FCC":"El plan Marshall.","FCD":"","FCE":"","FCRESPUESTA":"A","CATEGORIA":"HISTORIA"}]';
+            const preguntasFisica = '[{"FIPREGUNTA":22,"FCPREGUNTA":"¿Cómo se define la materia?","FCA":" Es la cantidad de peso que contiene un cuerpo.","FCB":"Es la relación entre la masa y el volumen de un cuerpo.","FCC":"Es todo aquello que tiene masa y ocupa un lugar en el espacio.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":23,"FCPREGUNTA":" ¿De qué depende el volumen que ocupa un gas?","FCA":" De la presión y la temperatura.","FCB":"Solo de la temperatura.","FCC":"Solo de la presión.","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":24,"FCPREGUNTA":" ¿Qué objeto se utiliza para medir la presión que ejercen los gases?","FCA":" Un termómetro","FCB":"Un barómetro","FCC":"Un manómetro","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":25,"FCPREGUNTA":"¿Cómo se llama el paso de estado de sólido a gas?","FCA":"Vaporización","FCB":"Condensación","FCC":"Sublimación","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":26,"FCPREGUNTA":" ¿Cómo se llaman las partes indivisibles de la materia?","FCA":" átomos","FCB":"electrones","FCC":"protones","FCD":"","FCE":"","FCRESPUESTA":"A","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":27,"FCPREGUNTA":"¿Cuál es el símbolo químico del Magnesio?","FCA":"M","FCB":"Ma","FCC":"Mg","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":28,"FCPREGUNTA":"¿Qué son los iones?","FCA":"Átomos de un mismo elemento","FCB":"Átomos que han ganado o perdido electrones","FCC":"Átonos que tienen distinto número atómico","FCD":"","FCE":"","FCRESPUESTA":"B","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":29,"FCPREGUNTA":"¿Qué sucede si mezclamos bicarbonato con vinagre?","FCA":"No se mezclan","FCB":"Una reacción química","FCC":"No sucede nada","FCD":"","FCE":"","FCRESPUESTA":"B","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":30,"FCPREGUNTA":"¿Cómo se llama el aparato que se usa para medir fuerzas?","FCA":"Báscula","FCB":"Dinamómetro","FCC":"Higrómetro","FCD":"","FCE":"","FCRESPUESTA":"B","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":31,"FCPREGUNTA":"¿Dónde pesarás más, en la cima del monte Everest o a nivel del mar?","FCA":"En ambos sitios por igual","FCB":"En el monte Everest","FCC":"A nivel del mar","FCD":"","FCE":"","FCRESPUESTA":"C","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":32,"FCPREGUNTA":"¿En qué se mide la energía?","FCA":"En julios","FCB":"En calorías","FCC":"En voltios","FCD":"","FCE":"","FCRESPUESTA":"A","CATEGORIA":"FISICA Y QUIMICA"},{"FIPREGUNTA":33,"FCPREGUNTA":" La propagación del calor producida por el movimiento de las partículas de un fluido se llama…","FCA":"Conducción","FCB":"Convección","FCC":"Radiación","FCD":"","FCE":"","FCRESPUESTA":"B","CATEGORIA":"FISICA Y QUIMICA"}]';
+   
+            var obj;
+ 
+            if(categoriaSeleccionada == null || categoriaSeleccionada =="General" )
+            {
+                obj = JSON.parse(preguntasCulturaGeneral);
+            }
+            else if(categoriaSeleccionada == "Historia")
+            {
+                obj = JSON.parse(preguntasHistoria);
+            }
+            else if(categoriaSeleccionada == "Fisica")
+            {
+                obj = JSON.parse(preguntasFisica);
+            }
+            var idPregunta = 0;
+            mostrarPregunta(idPregunta);
+
+        </script>
+       <!-- //Posteriormente se validara la respuesta con nuestra condicional, si la respuesta es correcta, se enviara una alerta con el mensaje
+       "tu respuesta es correcta" del contrario se enviara una alerta con el mensaje "BUU Respuesra incorrecta" -->
+        <script class=".validarespuesta">
+            function validaRespuesta(sender) {
+
+                var respuestaClick = sender.getAttribute('data-respuesta');
+                var respuestaCorrecta = obj[0].FCRESPUESTA;
+
+                if (respuestaCorrecta == respuestaClick) {
+                    alert("Respuesta correcta!!");
+                    
+                 
+                }
+                else {
+                    alert("BUUU Respuesta incorrecta :(");
+                }
+
+
+                mostrarPregunta(idPregunta+1);
+idPregunta+=1;
+            } 
+        </script>
+        
+        </body>
+        
+        </html>
